@@ -1,0 +1,93 @@
+---
+/*
+  彰化縣八大生活圈互動地圖。
+  地理邊界資料來源：src/data/changhua-map.json（已預先處理好的 SVG path 資料，
+  原始資料為公開的鄉鎮市界線圖資，經簡化、投影運算後產生，不需要在瀏覽器端
+  載入額外的地圖函式庫）。
+  每個鄉鎮市形狀都包在一個 <a> 連結裡，點擊會直接前往對應分區頁面，
+  滑鼠移過去（或觸控裝置長按）會顯示鄉鎮市名稱與所屬分區。
+*/
+import { getCollection } from "astro:content";
+import mapData from "../data/changhua-map.json";
+
+const regions = await getCollection("regions");
+const regionById = Object.fromEntries(regions.map((r) => [r.id, r.data]));
+
+// 8個分區的顏色，統一落在主視覺黃到強調橘的色系內，維持全站色彩一致性。
+// 要調整某個分區的顏色，直接改對應的色碼即可。
+const regionColors: Record<string, string> = {
+  "01-changhua": "#FFE58A",
+  "02-hemei": "#FFD451",
+  "03-lukang": "#FDC226",
+  "04-yuanlin": "#FDB913",
+  "05-xihu": "#DD9C05",
+  "06-tianzhong": "#F17B52",
+  "07-beidou": "#E4602F",
+  "08-erlin": "#C94A1D",
+};
+
+const legendEntries = Object.entries(regionColors)
+  .map(([id, color]) => ({ id, color, name: regionById[id]?.name ?? id }))
+  .sort((a, b) => a.id.localeCompare(b.id));
+---
+
+<div class="mx-auto flex max-w-4xl flex-col items-center gap-8 lg:flex-row lg:items-start">
+  <svg
+    viewBox={mapData.viewBox}
+    class="w-full max-w-sm drop-shadow-sm"
+    role="img"
+    aria-label="彰化縣八大生活圈地圖，點選任一鄉鎮市可前往該分區頁面"
+  >
+    {
+      mapData.townships.map((t) => (
+        <a href={`/regions/${t.regionId}`} aria-label={`${t.townName}，${regionById[t.regionId]?.name}`}>
+          <path
+            d={t.d}
+            fill={regionColors[t.regionId] ?? "#ccc"}
+            stroke="#fffdf7"
+            stroke-width="2.5"
+            stroke-linejoin="round"
+            class="map-path"
+          >
+            <title>
+              {t.townName}（{regionById[t.regionId]?.name}）
+            </title>
+          </path>
+        </a>
+      ))
+    }
+  </svg>
+
+  <div class="grid w-full grid-cols-2 gap-x-6 gap-y-3 sm:grid-cols-4 lg:w-64 lg:grid-cols-1">
+    {
+      legendEntries.map((entry) => (
+        <a
+          href={`/regions/${entry.id}`}
+          class="group flex items-center gap-2.5 rounded-lg px-2 py-1.5 transition-colors hover:bg-primary-50"
+        >
+          <span
+            class="h-3.5 w-3.5 shrink-0 rounded-sm ring-1 ring-inset ring-black/10"
+            style={`background-color:${entry.color}`}
+          />
+          <span class="text-sm font-medium text-ink-700 group-hover:text-primary-700">{entry.name}</span>
+        </a>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  .map-path {
+    cursor: pointer;
+    transition:
+      opacity 0.15s ease,
+      transform 0.15s ease;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  .map-path:hover,
+  .map-path:focus-visible {
+    opacity: 0.8;
+  }
+</style>
