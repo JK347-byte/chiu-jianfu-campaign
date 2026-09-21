@@ -45,8 +45,9 @@
 
 ## 尚待補齊事項（上線前請確認）
 
-- [ ] 候選人形象照（`public/images/`，見 `Hero.astro` 註解）
-- [ ] `src/content/timeline/` 經歷的正確年份與完整內容（目前只有職稱「彰化市長」是確認過的事實）
+- [x] 候選人形象照（`public/images/`，見 `Hero.astro` 註解）
+- [x] `src/content/timeline/` 主要經歷「2010–2018 彰化市長」已確認；第二筆仍是待補的示範項目，如有其他經歷請補上
+- [x] `src/content/achievements/` 彰化市長八年施政成果里程碑（`/achievements` 頁面），共10筆，皆附可查證來源；如有更多政績報導，可依同樣格式繼續新增
 - [ ] `src/content/news/` 目前是 2 篇【範例】示範檔案，請替換或刪除
 - [ ] `src/content/media/` 目前是 2 篇【範例】示範檔案，請替換或刪除
 - [ ] `src/data/site.ts` 裡所有標記「【待補】」的欄位（聯絡資訊、社群連結、捐款/志工表單的實際串接方式）

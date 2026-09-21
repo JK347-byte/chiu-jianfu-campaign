@@ -1,0 +1,41 @@
+---
+import { getCollection } from "astro:content";
+
+const all = await getCollection("achievements");
+// 首頁只挑幾個最有份量的數字當亮點，完整清單在 /achievements 頁面
+const featuredIds = ["03-railway", "09-satisfaction", "02-legacy-cases"];
+const featured = featuredIds
+  .map((id) => all.find((a) => a.id === id))
+  .filter((a): a is NonNullable<typeof a> => Boolean(a));
+---
+
+<section id="achievements" class="bg-ink-900 py-20 text-white">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-2xl text-center">
+      <p class="text-sm font-bold text-primary-400">2010–2018・彰化市長任內</p>
+      <h2 class="mt-3 text-3xl font-extrabold sm:text-4xl">說到做到，八年施政成果</h2>
+      <p class="mt-4 text-ink-300">不只是政見，過去八年市長任內已經證明過一次。</p>
+    </div>
+
+    <div class="mt-14 grid gap-6 sm:grid-cols-3">
+      {
+        featured.map((item) => (
+          <div class="rounded-2xl border border-ink-700 bg-ink-800 p-8 text-center">
+            <p class="text-4xl font-extrabold text-primary-400">{item.data.metric}</p>
+            <p class="mt-3 text-base font-bold">{item.data.title}</p>
+            <p class="mt-2 text-sm leading-relaxed text-ink-300">{item.data.summary}</p>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="mt-12 text-center">
+      <a
+        href="/achievements"
+        class="inline-block rounded-full bg-primary-500 px-8 py-3.5 text-base font-bold text-ink-900 transition-transform hover:scale-105 hover:bg-primary-400"
+      >
+        查看完整施政成果里程碑 →
+      </a>
+    </div>
+  </div>
+</section>

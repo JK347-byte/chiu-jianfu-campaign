@@ -11,6 +11,9 @@ import { glob } from "astro/loaders";
   維護方式：
   - 要新增一則新聞／行程 → 在 src/content/news/ 新增一個 .md 檔案，複製既有檔案的格式修改即可
   - 要新增一則政見 → 在 src/content/policies/ 新增一個 .md 檔案
+  - 要新增一則彰化市長任內施政成果 → 在 src/content/achievements/ 新增一個 .md 檔案，
+    每一筆都務必填 sourceUrl（可查證的新聞/官方來源連結），這個頁面的說服力建立在
+    「每個數字都查得到出處」，請不要新增查不到來源的內容
   - 要新增一筆經歷 → 在 src/content/timeline/ 新增一個 .md 檔案
   - 要新增一則媒體報導／影音 → 在 src/content/media/ 新增一個 .md 檔案
   - 分區資料（regions）較少變動，如需調整轄下鄉鎮市，直接改對應檔案內容即可
@@ -67,6 +70,20 @@ const media = defineCollection({
   }),
 });
 
+const achievements = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/achievements" }),
+  schema: z.object({
+    year: z.string(), // 事件發生的年份，例如「2018」，用字串方便填「2010–2018」這種區間
+    category: z.string(), // 分類標籤，例如「重大建設」「財政成果」「民調肯定」「市政治理」
+    title: z.string(),
+    summary: z.string(),
+    metric: z.string().optional(), // 亮點數字，首頁摘要卡片會優先顯示這個，例如「387億元」
+    order: z.number(), // 決定在里程碑頁面的排列順序（建議按時間先後）
+    sourceLabel: z.string(), // 證據來源的顯示文字，例如「Yahoo新聞—就職成果發表會報導」
+    sourceUrl: z.string().url(), // 證據來源連結，每一筆成果都應該附上可查證的來源
+  }),
+});
+
 const regions = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/regions" }),
   schema: z.object({
@@ -77,4 +94,4 @@ const regions = defineCollection({
   }),
 });
 
-export const collections = { news, policies, timeline, media, regions };
+export const collections = { news, policies, timeline, media, regions, achievements };
