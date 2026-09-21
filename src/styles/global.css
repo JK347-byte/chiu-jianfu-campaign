@@ -1,0 +1,65 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/*
+  ============================================================
+  競選網站色彩系統（Tailwind v4 CSS-first 主題設定）
+  ============================================================
+  這裡是全站唯一的顏色定義位置。未來如果要更換主視覺色，
+  只需要修改這個 @theme 區塊裡的色碼，全站所有用到
+  bg-primary / text-primary / bg-ink 等 class 的地方會自動套用新色，
+  不需要逐一修改 HTML／元件檔案。
+
+  目前採用邱建富候選人真實競選主視覺色：黃色（象徵希望與未來）。
+  搭配深墨色作為信任感文字/背景色，以及暖紅橘作為行動呼籲（捐款/志工）強調色。
+  刻意不使用藍色作為主色系，避免與既有政黨色產生聯想（候選人訴求跳脫藍綠對立）。
+*/
+@theme {
+  /* 主色：競選黃 */
+  --color-primary-50: #fffbeb;
+  --color-primary-100: #fff3c4;
+  --color-primary-200: #ffe58a;
+  --color-primary-300: #ffd451;
+  --color-primary-400: #fdc226;
+  --color-primary-500: #fdb913; /* 主色 */
+  --color-primary-600: #dd9c05;
+  --color-primary-700: #b67906;
+  --color-primary-800: #935f0c;
+  --color-primary-900: #784e0e;
+
+  /* 信任感深色：文字、頁尾、深色區塊背景 */
+  --color-ink-50: #f6f5f3;
+  --color-ink-100: #e8e5df;
+  --color-ink-200: #d1cbc0;
+  --color-ink-300: #ada297;
+  --color-ink-400: #837769;
+  --color-ink-500: #665b4e;
+  --color-ink-600: #52483d;
+  --color-ink-700: #423a31;
+  --color-ink-800: #322c26;
+  --color-ink-900: #221f1a; /* 主要深色 */
+  --color-ink-950: #16130f;
+
+  /* 行動呼籲色：捐款／志工報名等強調按鈕，與主色黃形成對比 */
+  --color-accent-100: #fde3d5;
+  --color-accent-400: #f17b52;
+  --color-accent-500: #e4602f; /* 主要強調色 */
+  --color-accent-600: #c94a1d;
+  --color-accent-700: #a53a17;
+
+  /* 中性色：底色、卡片、邊框 */
+  --color-surface: #fffdf7;
+  --color-surface-alt: #fff6e0;
+
+  --font-sans: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-surface);
+  color: var(--color-ink-900);
+  font-family: var(--font-sans);
+}

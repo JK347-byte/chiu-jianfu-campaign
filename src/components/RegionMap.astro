@@ -1,0 +1,38 @@
+---
+import { getCollection } from "astro:content";
+import RegionCard from "./RegionCard.astro";
+
+const regions = (await getCollection("regions")).sort((a, b) => a.data.order - b.data.order);
+const northRegions = regions.filter((r) => r.data.area === "北彰化");
+const southRegions = regions.filter((r) => r.data.area === "南彰化");
+---
+
+<section id="regions" class="bg-surface-alt py-20">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-2xl text-center">
+      <h2 class="text-3xl font-extrabold text-ink-900 sm:text-4xl">彰化八大生活圈</h2>
+      <p class="mt-4 text-ink-600">
+        深耕在地、熟悉每一個分區。點選分區，看看邱建富對這個地方的關注與服務。
+      </p>
+      <p class="mt-2 text-xs text-ink-400">
+        （目前以列表呈現轄下鄉鎮市，未來將加入互動式地理地圖）
+      </p>
+    </div>
+
+    <div class="mt-14 grid gap-10 lg:grid-cols-2">
+      <div>
+        <h3 class="mb-4 text-center text-lg font-bold text-primary-700 lg:text-left">北彰化地區</h3>
+        <div class="grid gap-4 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
+          {northRegions.map((region) => <RegionCard region={region} />)}
+        </div>
+      </div>
+
+      <div>
+        <h3 class="mb-4 text-center text-lg font-bold text-primary-700 lg:text-left">南彰化地區</h3>
+        <div class="grid gap-4 sm:grid-cols-2">
+          {southRegions.map((region) => <RegionCard region={region} />)}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

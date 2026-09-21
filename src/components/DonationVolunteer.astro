@@ -1,0 +1,112 @@
+---
+import { site } from "../data/site";
+---
+
+<section id="donate" class="py-20">
+  <div class="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
+    <!-- 捐款區塊 -->
+    <div class="rounded-3xl bg-ink-900 p-8 text-white sm:p-10">
+      <h2 class="text-2xl font-extrabold sm:text-3xl">{site.donation.heading}</h2>
+      <p class="mt-4 text-sm leading-relaxed text-ink-200">{site.donation.description}</p>
+
+      <div class="mt-8 grid grid-cols-2 gap-3">
+        {
+          site.donation.amountOptions.map((amount, i) => (
+            <button
+              type="button"
+              class:list={[
+                "rounded-xl border-2 px-4 py-3 text-lg font-bold transition-colors",
+                i === 0
+                  ? "border-primary-500 bg-primary-500 text-ink-900"
+                  : "border-ink-600 text-white hover:border-primary-400 hover:text-primary-400",
+              ]}
+            >
+              NT$ {amount.toLocaleString()}
+            </button>
+          ))
+        }
+      </div>
+
+      <button
+        type="button"
+        class="mt-6 w-full rounded-full bg-accent-500 py-3.5 text-base font-bold text-white transition-colors hover:bg-accent-600"
+      >
+        前往捐款
+      </button>
+
+      <p class="mt-4 text-xs leading-relaxed text-ink-400">{site.donation.note}</p>
+    </div>
+
+    <!-- 志工招募表單 -->
+    <div class="rounded-3xl border border-primary-200 bg-surface p-8 sm:p-10">
+      <h2 class="text-2xl font-extrabold text-ink-900 sm:text-3xl">{site.volunteer.heading}</h2>
+      <p class="mt-4 text-sm leading-relaxed text-ink-600">{site.volunteer.description}</p>
+
+      <form class="mt-8 space-y-5">
+        <div>
+          <label for="volunteer-name" class="mb-1.5 block text-sm font-medium text-ink-700">姓名</label>
+          <input
+            id="volunteer-name"
+            type="text"
+            placeholder="請輸入您的姓名"
+            class="w-full rounded-lg border border-ink-200 px-4 py-2.5 text-sm focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-200"
+          />
+        </div>
+
+        <div class="grid gap-5 sm:grid-cols-2">
+          <div>
+            <label for="volunteer-phone" class="mb-1.5 block text-sm font-medium text-ink-700">聯絡電話</label>
+            <input
+              id="volunteer-phone"
+              type="tel"
+              placeholder="09xx-xxx-xxx"
+              class="w-full rounded-lg border border-ink-200 px-4 py-2.5 text-sm focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-200"
+            />
+          </div>
+          <div>
+            <label for="volunteer-email" class="mb-1.5 block text-sm font-medium text-ink-700">Email</label>
+            <input
+              id="volunteer-email"
+              type="email"
+              placeholder="you@example.com"
+              class="w-full rounded-lg border border-ink-200 px-4 py-2.5 text-sm focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-200"
+            />
+          </div>
+        </div>
+
+        <fieldset>
+          <legend class="mb-2 text-sm font-medium text-ink-700">有興趣的參與方式</legend>
+          <div class="flex flex-wrap gap-2">
+            {
+              site.volunteer.areas.map((area) => (
+                <label class="flex cursor-pointer items-center gap-2 rounded-full border border-ink-200 px-3 py-1.5 text-sm text-ink-600 hover:border-primary-400">
+                  <input type="checkbox" class="accent-primary-500" />
+                  {area}
+                </label>
+              ))
+            }
+          </div>
+        </fieldset>
+
+        <div>
+          <label for="volunteer-message" class="mb-1.5 block text-sm font-medium text-ink-700">想對我們說的話（選填）</label>
+          <textarea
+            id="volunteer-message"
+            rows="3"
+            placeholder="歡迎留言"
+            class="w-full rounded-lg border border-ink-200 px-4 py-2.5 text-sm focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-200"
+          ></textarea>
+        </div>
+
+        <button
+          type="button"
+          class="w-full rounded-full bg-primary-500 py-3.5 text-base font-bold text-ink-900 transition-colors hover:bg-primary-400"
+        >
+          送出報名
+        </button>
+
+        <p class="text-xs leading-relaxed text-ink-400">{site.volunteer.note}</p>
+      </form>
+    </div>
+  </div>
+</section>

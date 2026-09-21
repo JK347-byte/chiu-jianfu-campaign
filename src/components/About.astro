@@ -1,0 +1,37 @@
+---
+import { getCollection } from "astro:content";
+import { site } from "../data/site";
+
+const timelineEntries = (await getCollection("timeline")).sort((a, b) => a.data.order - b.data.order);
+---
+
+<section id="about" class="bg-surface-alt py-20">
+  <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+    <h2 class="text-3xl font-extrabold text-ink-900 sm:text-4xl">{site.about.heading}</h2>
+
+    <div class="mt-6 space-y-4 text-lg leading-relaxed text-ink-700">
+      {site.about.paragraphs.map((p) => <p>{p}</p>)}
+    </div>
+
+    <!-- 經歷 Timeline -->
+    <div class="mt-14">
+      <h3 class="mb-8 text-xl font-bold text-ink-900">經歷</h3>
+      <ol class="relative space-y-8 border-l-2 border-primary-300 pl-8">
+        {
+          timelineEntries.map((entry) => (
+            <li class="relative">
+              <span class="absolute -left-[2.35rem] top-1 h-4 w-4 rounded-full border-4 border-surface-alt bg-primary-500" />
+              <p class="text-sm font-bold text-primary-700">{entry.data.year}</p>
+              <p class="mt-1 text-lg font-semibold text-ink-900">{entry.data.title}</p>
+              {!entry.data.verified && (
+                <span class="mt-1 inline-block rounded bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-700">
+                  待競選團隊確認內容
+                </span>
+              )}
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,50 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import NewsCard from "../../components/NewsCard.astro";
+
+export async function getStaticPaths() {
+  const regions = await getCollection("regions");
+  return regions.map((region) => ({
+    params: { id: region.id },
+    props: { region },
+  }));
+}
+
+const { region } = Astro.props;
+
+// 找出跟這個分區相關的新聞／行程（news 檔案的 frontmatter 若有填 region 欄位且對應此分區 id）
+const relatedPosts = (await getCollection("news")).filter((post) => post.data.region === region.id);
+---
+
+<BaseLayout title={region.data.name} description={`邱建富在${region.data.name}的在地服務與關注議題`}>
+  <section class="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
+    <a href="/#regions" class="text-sm font-bold text-primary-600 hover:text-primary-700">← 回八大生活圈</a>
+
+    <span class="mt-6 inline-block rounded-full bg-primary-100 px-4 py-1 text-sm font-bold text-primary-700">
+      {region.data.area}
+    </span>
+    <h1 class="mt-4 text-3xl font-extrabold text-ink-900 sm:text-4xl">{region.data.name}</h1>
+    <p class="mt-3 text-ink-600">轄下鄉鎮市：{region.data.townships.join("、")}</p>
+
+    <div class="mt-10 rounded-2xl border border-dashed border-primary-300 bg-primary-50 p-8 text-center text-ink-500">
+      <p class="font-medium">這個分區的在地政見、服務據點、在地故事，正在陸續補充中。</p>
+      <p class="mt-2 text-sm">
+        （給維護團隊：可在 news 文章的 frontmatter 加上
+        <code class="rounded bg-white px-1.5 py-0.5">region: "{region.id}"</code>，
+        該篇就會自動出現在這個分區頁面下方。）
+      </p>
+    </div>
+
+    {
+      relatedPosts.length > 0 && (
+        <div class="mt-12">
+          <h2 class="text-xl font-bold text-ink-900">與{region.data.name}相關的消息</h2>
+          <div class="mt-6 grid gap-6 sm:grid-cols-2">
+            {relatedPosts.map((post) => <NewsCard post={post} />)}
+          </div>
+        </div>
+      )
+    }
+  </section>
+</BaseLayout>

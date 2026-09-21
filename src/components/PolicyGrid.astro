@@ -1,0 +1,37 @@
+---
+import { getCollection } from "astro:content";
+
+const policies = (await getCollection("policies")).sort((a, b) => a.data.order - b.data.order);
+---
+
+<section id="policies" class="py-20">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-2xl text-center">
+      <h2 class="text-3xl font-extrabold text-ink-900 sm:text-4xl">核心政見</h2>
+      <p class="mt-4 text-ink-600">三大政策方向，讓彰化產業升級、世代共好</p>
+    </div>
+
+    <div class="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        policies.map((policy) => (
+          <article class="flex flex-col rounded-3xl border border-primary-100 bg-surface p-8 shadow-sm transition-shadow hover:shadow-lg">
+            <span class="text-4xl">{policy.data.icon}</span>
+            <h3 class="mt-4 text-xl font-bold text-ink-900">{policy.data.title}</h3>
+            <p class="mt-3 text-sm leading-relaxed text-ink-600">{policy.data.summary}</p>
+
+            {policy.data.highlights && (
+              <ul class="mt-5 space-y-2 border-t border-primary-100 pt-5">
+                {policy.data.highlights.map((item) => (
+                  <li class="flex gap-2 text-sm text-ink-700">
+                    <span class="mt-0.5 text-primary-500">●</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

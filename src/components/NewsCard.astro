@@ -1,0 +1,35 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  post: CollectionEntry<"news">;
+}
+
+const { post } = Astro.props;
+const formattedDate = post.data.date.toLocaleDateString("zh-TW", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+
+const categoryStyles: Record<string, string> = {
+  最新消息: "bg-primary-100 text-primary-700",
+  競選行程: "bg-accent-100 text-accent-700",
+  媒體報導: "bg-ink-100 text-ink-700",
+};
+---
+
+<a
+  href={`/news/${post.id}`}
+  class="flex flex-col rounded-2xl border border-primary-100 bg-surface p-6 transition-shadow hover:shadow-md"
+>
+  <div class="flex items-center gap-3">
+    <span class={`rounded-full px-3 py-1 text-xs font-bold ${categoryStyles[post.data.category] ?? "bg-ink-100 text-ink-700"}`}>
+      {post.data.category}
+    </span>
+    <time class="text-xs text-ink-400">{formattedDate}</time>
+  </div>
+  <h3 class="mt-4 text-lg font-bold text-ink-900">{post.data.title}</h3>
+  <p class="mt-2 line-clamp-3 text-sm leading-relaxed text-ink-600">{post.data.summary}</p>
+  <span class="mt-4 text-sm font-bold text-primary-600">閱讀更多 →</span>
+</a>

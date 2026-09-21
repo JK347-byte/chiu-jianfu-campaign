@@ -1,0 +1,95 @@
+---
+import { site } from "../data/site";
+---
+
+<section id="hero" class="relative overflow-hidden bg-surface">
+  <!-- 裝飾用漸層光暈，純 CSS，不需要圖片 -->
+  <div
+    class="pointer-events-none absolute -top-32 -right-32 h-96 w-96 rounded-full bg-primary-300/40 blur-3xl"
+    aria-hidden="true"
+  >
+  </div>
+  <div
+    class="pointer-events-none absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-accent-400/20 blur-3xl"
+    aria-hidden="true"
+  >
+  </div>
+
+  <div class="relative mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:items-center lg:py-28 lg:px-8">
+    <div class="hero-fade-in">
+      <p class="inline-block rounded-full bg-primary-100 px-4 py-1 text-sm font-bold text-primary-700">
+        {site.candidate.role}・{site.candidate.party}
+      </p>
+      <h1 class="mt-6 text-4xl font-extrabold leading-tight text-ink-900 sm:text-5xl lg:text-6xl">
+        {site.hero.slogan}
+      </h1>
+      <p class="mt-6 text-lg leading-relaxed text-ink-600">
+        {site.hero.subtitle}
+      </p>
+
+      <div class="mt-10 flex flex-wrap gap-4">
+        <a
+          href={site.hero.primaryCta.href}
+          class="rounded-full bg-accent-500 px-8 py-3.5 text-base font-bold text-white shadow-lg shadow-accent-500/30 transition-transform hover:scale-105 hover:bg-accent-600"
+        >
+          {site.hero.primaryCta.label}
+        </a>
+        <a
+          href={site.hero.secondaryCta.href}
+          class="rounded-full border-2 border-ink-900 px-8 py-3.5 text-base font-bold text-ink-900 transition-colors hover:bg-ink-900 hover:text-white"
+        >
+          {site.hero.secondaryCta.label}
+        </a>
+      </div>
+    </div>
+
+    <!--
+      候選人形象照區塊。
+      目前是示範用的占位圖形（沒有真實照片會顯示這個圓形色塊），
+      請把真實照片放到 public/images/ 底下，並在 src/data/site.ts 的
+      hero.portrait 填入正確檔名後，把下面註解掉的 <img> 換成使用中。
+    -->
+    <div class="hero-fade-in-delayed relative mx-auto aspect-square w-full max-w-md">
+      <div
+        class="absolute inset-0 rounded-[3rem] bg-gradient-to-br from-primary-400 via-primary-500 to-accent-500 shadow-2xl"
+      >
+      </div>
+      <div class="absolute inset-4 flex items-center justify-center rounded-[2.5rem] bg-surface/90">
+        <div class="text-center">
+          <p class="text-8xl font-black text-primary-500">{site.candidate.name.slice(0, 1)}</p>
+          <p class="mt-2 text-sm font-medium text-ink-400">候選人形象照待放置</p>
+          <p class="text-xs text-ink-300">public/images/{site.hero.portrait.split("/").pop()}</p>
+        </div>
+      </div>
+      <!-- <img src={site.hero.portrait} alt={site.candidate.name} class="absolute inset-4 rounded-[2.5rem] object-cover w-[calc(100%-2rem)] h-[calc(100%-2rem)]" /> -->
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes hero-fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .hero-fade-in {
+    animation: hero-fade-up 0.7s ease-out both;
+  }
+
+  .hero-fade-in-delayed {
+    animation: hero-fade-up 0.7s ease-out 0.15s both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-fade-in,
+    .hero-fade-in-delayed {
+      animation: none;
+    }
+  }
+</style>

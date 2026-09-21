@@ -1,0 +1,19 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  region: CollectionEntry<"regions">;
+}
+
+const { region } = Astro.props;
+---
+
+<a
+  href={`/regions/${region.id}`}
+  class="group flex flex-col rounded-2xl border border-primary-200 bg-surface p-5 transition-all hover:-translate-y-1 hover:border-primary-400 hover:shadow-md"
+>
+  <span class="text-base font-bold text-ink-900 group-hover:text-primary-700">{region.data.name}</span>
+  <span class="mt-2 text-xs leading-relaxed text-ink-500">
+    {region.data.townships.join("、")}
+  </span>
+</a>
