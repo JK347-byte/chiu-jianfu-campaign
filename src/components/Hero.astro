@@ -45,23 +45,20 @@ import { site } from "../data/site";
 
     <!--
       候選人形象照區塊。
-      目前是示範用的占位圖形（沒有真實照片會顯示這個圓形色塊），
-      請把真實照片放到 public/images/ 底下，並在 src/data/site.ts 的
-      hero.portrait 填入正確檔名後，把下面註解掉的 <img> 換成使用中。
+      照片放在 public/images/，檔名對應 src/data/site.ts 的 hero.portrait。
+      要換照片：把新檔案放進 public/images/，改 hero.portrait 的檔名字串即可，
+      不需要動這裡的排版程式碼。
     -->
     <div class="hero-fade-in-delayed relative mx-auto aspect-square w-full max-w-md">
       <div
         class="absolute inset-0 rounded-[3rem] bg-gradient-to-br from-primary-400 via-primary-500 to-accent-500 shadow-2xl"
       >
       </div>
-      <div class="absolute inset-4 flex items-center justify-center rounded-[2.5rem] bg-surface/90">
-        <div class="text-center">
-          <p class="text-8xl font-black text-primary-500">{site.candidate.name.slice(0, 1)}</p>
-          <p class="mt-2 text-sm font-medium text-ink-400">候選人形象照待放置</p>
-          <p class="text-xs text-ink-300">public/images/{site.hero.portrait.split("/").pop()}</p>
-        </div>
-      </div>
-      <!-- <img src={site.hero.portrait} alt={site.candidate.name} class="absolute inset-4 rounded-[2.5rem] object-cover w-[calc(100%-2rem)] h-[calc(100%-2rem)]" /> -->
+      <img
+        src={site.hero.portrait}
+        alt={`${site.candidate.name}，${site.candidate.role}`}
+        class="absolute inset-4 h-[calc(100%-2rem)] w-[calc(100%-2rem)] rounded-[2.5rem] object-cover object-center shadow-inner"
+      />
     </div>
   </div>
 </section>
