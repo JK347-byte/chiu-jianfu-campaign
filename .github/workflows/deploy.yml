@@ -1,0 +1,37 @@
+name: Deploy to GitHub Pages
+
+# 每次 push 到 main 分支，自動重新建置並部署網站。
+# 給維護團隊：只要照 README 說明改 src/content/ 或 src/data/site.ts 的內容、
+# commit、push 到 main，幾分鐘後網站就會自動更新，不需要手動做任何部署動作。
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: withastro/action@v3
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

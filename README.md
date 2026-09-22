@@ -43,6 +43,16 @@
 | `npm run build` | 產生正式上線用的靜態檔案到 `dist/` |
 | `npm run preview` | 本機預覽 build 出來的正式版網站 |
 
+## 部署方式
+
+網站目前部署在 GitHub Pages：**https://jk347-byte.github.io/chiu-jianfu-campaign/**
+
+- 每次 push 到 `main` 分支，`.github/workflows/deploy.yml` 會自動重新建置並更新網站，**不需要手動部署**，改完內容、commit、push 就好
+- 這個網址目前是**內部審閱用草稿**，還沒正式對外公布：`src/layouts/BaseLayout.astro` 加了 `noindex` 標籤、`public/robots.txt` 擋爬蟲，Google 不會收錄，但只要有網址連結，任何人都打得開
+- 正式要公開上線、給 Google 收錄時，記得把這兩個地方的擋爬蟲設定拿掉
+- 目前掛在 `jk347-byte`（日和聯合診所）這個 GitHub 帳號底下方便快速開發，之後如果要交接給獨立的競選團隊帳號，用 GitHub 的「Transfer ownership」（repo設定內）整包過戶即可，不用重建
+- 未來如果要換成候選人自己的正式網域（例如 `chiu-jianfu.tw`），改 `astro.config.mjs` 的 `site` 跟 `base`（`base` 改回 `'/'`）就好，其餘程式碼不用動，因為連結都是透過 `src/utils/url.ts` 統一組出來的
+
 ## 尚待補齊事項（上線前請確認）
 
 - [x] 候選人形象照（`public/images/`，見 `Hero.astro` 註解）

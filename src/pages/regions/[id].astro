@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import NewsCard from "../../components/NewsCard.astro";
+import { withBase } from "../../utils/url";
 
 export async function getStaticPaths() {
   const regions = await getCollection("regions");
@@ -19,7 +20,7 @@ const relatedPosts = (await getCollection("news")).filter((post) => post.data.re
 
 <BaseLayout title={region.data.name} description={`邱建富在${region.data.name}的在地服務與關注議題`}>
   <section class="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
-    <a href="/#regions" class="text-sm font-bold text-primary-600 hover:text-primary-700">← 回八大生活圈</a>
+    <a href={withBase("/#regions")} class="text-sm font-bold text-primary-600 hover:text-primary-700">← 回八大生活圈</a>
 
     <span class="mt-6 inline-block rounded-full bg-primary-100 px-4 py-1 text-sm font-bold text-primary-700">
       {region.data.area}

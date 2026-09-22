@@ -1,5 +1,6 @@
 ---
 import { getCollection } from "astro:content";
+import { withBase } from "../utils/url";
 
 const all = await getCollection("achievements");
 // 首頁只挑幾個最有份量的數字當亮點，完整清單在 /achievements 頁面
@@ -31,7 +32,7 @@ const featured = featuredIds
 
     <div class="mt-12 text-center">
       <a
-        href="/achievements"
+        href={withBase("/achievements")}
         class="inline-block rounded-full bg-primary-500 px-8 py-3.5 text-base font-bold text-ink-900 transition-transform hover:scale-105 hover:bg-primary-400"
       >
         查看完整施政成果里程碑 →

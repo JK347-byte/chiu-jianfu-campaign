@@ -1,5 +1,6 @@
 ---
 import { site } from "../data/site";
+import { withBase } from "../utils/url";
 ---
 
 <section id="hero" class="relative overflow-hidden bg-surface">
@@ -55,7 +56,7 @@ import { site } from "../data/site";
       >
       </div>
       <img
-        src={site.hero.portrait}
+        src={withBase(site.hero.portrait)}
         alt={`${site.candidate.name}，${site.candidate.role}`}
         class="absolute inset-4 h-[calc(100%-2rem)] w-[calc(100%-2rem)] rounded-[2.5rem] object-cover object-center shadow-inner"
       />

@@ -3,6 +3,7 @@ import "../styles/global.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import { site } from "../data/site";
+import { withBase } from "../utils/url";
 
 interface Props {
   title: string;
@@ -17,8 +18,13 @@ const { title, description = site.hero.slogan } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href={withBase("/favicon.svg")} />
     <meta name="description" content={description} />
+    <!--
+      這個網站現在還是「內部審閱用」草稿，不對外公布，所以擋掉搜尋引擎索引。
+      正式決定公開上線、要讓 Google 收錄的時候，把下面這行 noindex 刪掉即可。
+    -->
+    <meta name="robots" content="noindex, nofollow" />
     <title>{title} ｜ {site.candidate.name} {site.candidate.role}</title>
   </head>
   <body class="flex min-h-screen flex-col">

@@ -9,6 +9,7 @@
 */
 import { getCollection } from "astro:content";
 import mapData from "../data/changhua-map.json";
+import { withBase } from "../utils/url";
 
 const regions = await getCollection("regions");
 const regionById = Object.fromEntries(regions.map((r) => [r.id, r.data]));
@@ -40,7 +41,7 @@ const legendEntries = Object.entries(regionColors)
   >
     {
       mapData.townships.map((t) => (
-        <a href={`/regions/${t.regionId}`} aria-label={`${t.townName}，${regionById[t.regionId]?.name}`}>
+        <a href={withBase(`/regions/${t.regionId}`)} aria-label={`${t.townName}，${regionById[t.regionId]?.name}`}>
           <path
             d={t.d}
             fill={regionColors[t.regionId] ?? "#ccc"}
@@ -62,7 +63,7 @@ const legendEntries = Object.entries(regionColors)
     {
       legendEntries.map((entry) => (
         <a
-          href={`/regions/${entry.id}`}
+          href={withBase(`/regions/${entry.id}`)}
           class="group flex items-center gap-2.5 rounded-lg px-2 py-1.5 transition-colors hover:bg-primary-50"
         >
           <span

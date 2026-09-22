@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import { withBase } from "../utils/url";
 
 interface Props {
   post: CollectionEntry<"news">;
@@ -20,7 +21,7 @@ const categoryStyles: Record<string, string> = {
 ---
 
 <a
-  href={`/news/${post.id}`}
+  href={withBase(`/news/${post.id}`)}
   class="flex flex-col rounded-2xl border border-primary-100 bg-surface p-6 transition-shadow hover:shadow-md"
 >
   <div class="flex items-center gap-3">

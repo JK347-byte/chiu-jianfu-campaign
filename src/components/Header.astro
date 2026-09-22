@@ -1,21 +1,22 @@
 ---
 import { site } from "../data/site";
+import { withBase } from "../utils/url";
 
 const navItems = [
-  { label: "首頁", href: "/#hero" },
-  { label: "關於候選人", href: "/#about" },
-  { label: "施政成果", href: "/achievements" },
-  { label: "核心政見", href: "/#policies" },
-  { label: "分區服務", href: "/#regions" },
-  { label: "最新消息", href: "/news" },
-  { label: "影音專區", href: "/#media" },
-  { label: "支持我們", href: "/#donate" },
+  { label: "首頁", href: withBase("/#hero") },
+  { label: "關於候選人", href: withBase("/#about") },
+  { label: "施政成果", href: withBase("/achievements") },
+  { label: "核心政見", href: withBase("/#policies") },
+  { label: "分區服務", href: withBase("/#regions") },
+  { label: "最新消息", href: withBase("/news") },
+  { label: "影音專區", href: withBase("/#media") },
+  { label: "支持我們", href: withBase("/#donate") },
 ];
 ---
 
 <header class="sticky top-0 z-50 border-b border-primary-200 bg-surface/95 backdrop-blur">
   <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
-    <a href="/" class="flex items-center gap-3">
+    <a href={withBase("/")} class="flex items-center gap-3">
       <span
         class="flex h-10 w-10 items-center justify-center rounded-full bg-primary-500 font-bold text-ink-900"
       >
