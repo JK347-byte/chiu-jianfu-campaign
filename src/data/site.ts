@@ -65,7 +65,7 @@ export const site = {
 
   contact: {
     officeAddress: "競選辦公室：彰化縣彰化市中正路二段120號1樓",
-    phone: "【待補】請填入聯絡電話",
+    phone: "+886 936 160 322",
     email: "【待補】請填入聯絡信箱",
   },
 
