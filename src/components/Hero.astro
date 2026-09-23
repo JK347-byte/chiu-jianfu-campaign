@@ -10,14 +10,26 @@ import { withBase } from "../utils/url";
     aria-hidden="true"
   >
   </div>
-  <div
-    class="pointer-events-none absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-accent-400/20 blur-3xl"
-    aria-hidden="true"
-  >
+
+  <!--
+    候選人形象照（桌面版）：滿版貼齊螢幕右側，左緣用漸層淡出融入背景色，
+    不用外框、不用圓角卡片，效果類似「照片直接融進頁面」而不是「一張裝框的照片」。
+    照片放在 public/images/，檔名對應 src/data/site.ts 的 hero.portrait，
+    換照片只需要換檔案、改檔名字串，不用動這裡的排版。
+  -->
+  <div class="hero-photo-fade absolute inset-y-0 right-0 hidden w-[58%] lg:block" aria-hidden="false">
+    <img
+      src={withBase(site.hero.portrait)}
+      alt={`${site.candidate.name}，${site.candidate.role}`}
+      class="h-full w-full object-cover object-top"
+    />
+    <div class="absolute bottom-10 right-10 rounded-full bg-ink-900/90 px-5 py-2.5 text-sm font-bold text-primary-300 shadow-lg backdrop-blur-sm">
+      {site.candidate.role}・{site.candidate.name}
+    </div>
   </div>
 
-  <div class="relative mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:items-center lg:py-28 lg:px-8">
-    <div class="hero-fade-in">
+  <div class="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:py-28 lg:px-8">
+    <div class="hero-fade-in max-w-xl">
       <p class="inline-block rounded-full bg-primary-100 px-4 py-1 text-sm font-bold text-primary-700">
         {site.candidate.role}・{site.candidate.party}
       </p>
@@ -44,22 +56,18 @@ import { withBase } from "../utils/url";
       </div>
     </div>
 
-    <!--
-      候選人形象照區塊。
-      照片放在 public/images/，檔名對應 src/data/site.ts 的 hero.portrait。
-      要換照片：把新檔案放進 public/images/，改 hero.portrait 的檔名字串即可，
-      不需要動這裡的排版程式碼。
-    -->
-    <div class="hero-fade-in-delayed relative mx-auto aspect-square w-full max-w-md">
-      <div
-        class="absolute inset-0 rounded-[3rem] bg-gradient-to-br from-primary-400 via-primary-500 to-accent-500 shadow-2xl"
-      >
+    <!-- 手機／平板版：照片改回正常區塊，淡出效果換成底部淡出，避免跟文字疊在一起看不清楚 -->
+    <div class="hero-fade-in-delayed relative mx-auto mt-12 w-full max-w-md lg:hidden">
+      <div class="hero-photo-fade-mobile relative aspect-[4/5] w-full overflow-hidden">
+        <img
+          src={withBase(site.hero.portrait)}
+          alt={`${site.candidate.name}，${site.candidate.role}`}
+          class="h-full w-full rounded-[2.5rem] object-cover object-top"
+        />
       </div>
-      <img
-        src={withBase(site.hero.portrait)}
-        alt={`${site.candidate.name}，${site.candidate.role}`}
-        class="absolute inset-4 h-[calc(100%-2rem)] w-[calc(100%-2rem)] rounded-[2.5rem] object-cover object-center shadow-inner"
-      />
+      <div class="mt-4 inline-block rounded-full bg-ink-900/90 px-5 py-2.5 text-sm font-bold text-primary-300">
+        {site.candidate.role}・{site.candidate.name}
+      </div>
     </div>
   </div>
 </section>
@@ -89,5 +97,17 @@ import { withBase } from "../utils/url";
     .hero-fade-in-delayed {
       animation: none;
     }
+  }
+
+  /* 桌面版：照片左緣漸層淡出，融入 bg-surface 背景色，不做硬邊框 */
+  .hero-photo-fade img {
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 22%, black 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 22%, black 100%);
+  }
+
+  /* 手機版：圓角卡片底部淡出，柔化跟下方內容的交界 */
+  .hero-photo-fade-mobile img {
+    -webkit-mask-image: linear-gradient(to bottom, black 78%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 78%, transparent 100%);
   }
 </style>

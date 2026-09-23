@@ -64,13 +64,13 @@ export const site = {
   },
 
   contact: {
-    officeAddress: "【待補】請填入競選辦公室地址",
+    officeAddress: "競選辦公室：彰化縣彰化市中正路二段120號1樓",
     phone: "【待補】請填入聯絡電話",
     email: "【待補】請填入聯絡信箱",
   },
 
   social: {
-    facebook: "#",
+    facebook: "https://www.facebook.com/ChenfuChanghua/?locale=zh_TW",
     youtube: "#",
     instagram: "#",
     line: "#",

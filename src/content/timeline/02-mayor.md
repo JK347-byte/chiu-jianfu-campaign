@@ -1,7 +1,7 @@
 ---
 year: "2010–2018"
-title: "彰化市長"
-order: 1
+title: "彰化市長（第16–17屆），首位民主進步黨籍彰化市長"
+order: 2
 verified: true
 ---
 
