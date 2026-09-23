@@ -1,0 +1,32 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  item: CollectionEntry<"media">;
+}
+
+const { item } = Astro.props;
+
+const typeIcon: Record<string, string> = {
+  "YouTube影片": "▶️",
+  "Podcast": "🎙️",
+  "其他影音": "🎬",
+};
+---
+
+<a
+  href={item.data.url}
+  target="_blank"
+  rel="noopener noreferrer"
+  class="group flex flex-col overflow-hidden rounded-2xl border border-primary-100 bg-surface shadow-sm transition-shadow hover:shadow-md"
+>
+  <div class="flex aspect-video items-center justify-center bg-ink-900">
+    <span class="text-4xl">{typeIcon[item.data.type] ?? "🎬"}</span>
+  </div>
+  <div class="p-5">
+    <span class="text-xs font-bold text-primary-600">{item.data.type}・{item.data.source}</span>
+    <h3 class="mt-2 text-base font-bold text-ink-900 group-hover:text-primary-700">
+      {item.data.title}
+    </h3>
+  </div>
+</a>

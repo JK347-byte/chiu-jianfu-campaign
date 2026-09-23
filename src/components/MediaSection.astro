@@ -1,39 +1,26 @@
 ---
 import { getCollection } from "astro:content";
+import { withBase } from "../utils/url";
+import MediaCard from "./MediaCard.astro";
 
-const items = (await getCollection("media")).sort(
+const allItems = (await getCollection("media")).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
 );
+const latestItems = allItems.slice(0, 3);
 ---
 
 <section id="media" class="bg-surface-alt py-20">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="mx-auto max-w-2xl text-center">
-      <h2 class="text-3xl font-extrabold text-ink-900 sm:text-4xl">影音專區 / 媒體報導</h2>
-      <p class="mt-4 text-ink-600">看見邱建富，聽見彰化的聲音</p>
+    <div class="flex flex-wrap items-end justify-between gap-4">
+      <div>
+        <h2 class="text-3xl font-extrabold text-ink-900 sm:text-4xl">影音專區</h2>
+        <p class="mt-4 text-ink-600">看見邱建富，聽見彰化的聲音</p>
+      </div>
+      <a href={withBase("/media")} class="text-sm font-bold text-primary-600 hover:text-primary-700">查看全部 →</a>
     </div>
 
-    <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {
-        items.map((item) => (
-          <a
-            href={item.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="group flex flex-col overflow-hidden rounded-2xl border border-primary-100 bg-surface shadow-sm transition-shadow hover:shadow-md"
-          >
-            <div class="flex aspect-video items-center justify-center bg-ink-900">
-              <span class="text-4xl">{item.data.type === "影音" ? "▶️" : "📰"}</span>
-            </div>
-            <div class="p-5">
-              <span class="text-xs font-bold text-primary-600">{item.data.type}・{item.data.source}</span>
-              <h3 class="mt-2 text-base font-bold text-ink-900 group-hover:text-primary-700">
-                {item.data.title}
-              </h3>
-            </div>
-          </a>
-        ))
-      }
+    <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {latestItems.map((item) => <MediaCard item={item} />)}
     </div>
   </div>
 </section>

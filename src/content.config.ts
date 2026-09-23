@@ -15,7 +15,8 @@ import { glob } from "astro/loaders";
     每一筆都務必填 sourceUrl（可查證的新聞/官方來源連結），這個頁面的說服力建立在
     「每個數字都查得到出處」，請不要新增查不到來源的內容
   - 要新增一筆經歷 → 在 src/content/timeline/ 新增一個 .md 檔案
-  - 要新增一則媒體報導／影音 → 在 src/content/media/ 新增一個 .md 檔案
+  - 要新增一則影音（YouTube影片／Podcast）→ 在 src/content/media/ 新增一個 .md 檔案。
+    外部媒體報導請改放 src/content/news/，category 選「媒體報導」
   - 分區資料（regions）較少變動，如需調整轄下鄉鎮市，直接改對應檔案內容即可
 
   如果新增的檔案漏填必填欄位，或欄位型別填錯（例如日期格式錯誤），
@@ -63,8 +64,8 @@ const media = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/media" }),
   schema: z.object({
     title: z.string(),
-    type: z.enum(["影音", "媒體報導"]),
-    source: z.string(), // 例如「YouTube」「中國時報」
+    type: z.enum(["YouTube影片", "Podcast", "其他影音"]),
+    source: z.string(), // 頻道/節目名稱，例如「邱建富YouTube頻道」「彰化好聲音Podcast」
     url: z.string().url(),
     date: z.coerce.date(),
   }),

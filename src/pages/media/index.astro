@@ -1,0 +1,20 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import MediaCard from "../../components/MediaCard.astro";
+
+const allItems = (await getCollection("media")).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<BaseLayout title="影音專區" description="邱建富的YouTube影片與Podcast節目">
+  <section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+    <h1 class="text-3xl font-extrabold text-ink-900 sm:text-4xl">影音專區</h1>
+    <p class="mt-4 text-ink-600">看見邱建富，聽見彰化的聲音。YouTube 影片、Podcast 節目都會陸續更新在這裡。</p>
+
+    <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {allItems.map((item) => <MediaCard item={item} />)}
+    </div>
+  </section>
+</BaseLayout>

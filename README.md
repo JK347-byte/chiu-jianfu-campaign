@@ -13,7 +13,7 @@
 | `src/content/news/` | 最新消息、競選行程、媒體報導 | 複製一個現有 `.md` 檔案，改內容存新檔名 |
 | `src/content/policies/` | 核心政見卡片 | 同上 |
 | `src/content/timeline/` | 候選人經歷 | 同上 |
-| `src/content/media/` | 影音專區連結 | 同上 |
+| `src/content/media/` | 影音專區（YouTube影片／Podcast），有獨立頁面 `/media`，未來團隊上傳影片/Podcast都新增在這裡 | 同上 |
 | `src/content/regions/` | 彰化八大生活圈分區資料 | 同上（不常變動） |
 
 每個檔案最上面「`---` 包起來」的部分叫 frontmatter，是固定欄位（標題、日期、分類等），下面才是正文，可以用 Markdown 語法（`##` 是小標題、`-` 是條列）。
@@ -59,7 +59,7 @@
 - [x] `src/content/timeline/` 完整經歷已依維基百科補齊：2002–2010縣議員、2010–2018彰化市長（首位民進黨籍）、2017–2022民進黨彰化縣黨部主委、2026年6月退出民進黨參選。**這段包含退黨參選的政治敏感歷程，詳見下方「⚠️需要團隊決定的事」**
 - [x] `src/content/achievements/` 彰化市長八年施政成果里程碑（`/achievements` 頁面），共10筆，皆附可查證來源；如有更多政績報導，可依同樣格式繼續新增
 - [x] `src/content/news/` 已換成2則真實新聞（退黨參選公告、完成候選人登記），皆附來源連結
-- [x] `src/content/media/` 已換成3則真實媒體報導連結（華視、聯合新聞網、信傳媒）；**影音類還是示範假資料**，目前沒找到候選人的正式影片
+- [x] 媒體報導改放進 `src/content/news/`（category「媒體報導」），`src/content/media/` 現在專門放影音（YouTube影片／Podcast），已獨立成 `/media` 頁面；**目前還是示範假資料，等團隊有真的影片/Podcast再新增**
 - [x] `src/data/site.ts` 聯絡電話、Facebook連結、辦公室地址已從候選人官方FB粉專取得填入；**Email 仍待補**
 - [ ] 捐款與志工報名表單目前**只有外觀，沒有串接任何後端**，按鈕不會真的送出資料，上線前務必決定要串接金流／表單服務，否則會誤導填表的民眾
 - [ ] 地圖資料來源授權待確認：`src/data/changhua-map.json` 的鄉鎮市邊界，是由 [g0v/twgeojson](https://github.com/g0v/twgeojson)（`twTown1982.topo.json`）公開圖資處理而來，該資料源自政府公開圖資，但 g0v 原始 repo 沒有標示明確授權條款，正式上線前建議請團隊法務確認使用與標示方式是否需要調整
