@@ -64,8 +64,8 @@ export const site = {
   },
 
   contact: {
-    officeAddress: "競選辦公室：彰化縣彰化市中正路二段120號1樓",
-    phone: "+886 936 160 322",
+    officeAddress: "競選總部：彰化市中央路221號",
+    phone: "04-7631090",
     email: "【待補】請填入聯絡信箱",
   },
 

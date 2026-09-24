@@ -50,7 +50,7 @@
 | 平台 | 網址 | 帳號歸屬 |
 | --- | --- | --- |
 | GitHub Pages | https://jk347-byte.github.io/chiu-jianfu-campaign/ | 掛在 `jk347-byte`（日和聯合診所帳號），方便開發階段快速預覽 |
-| Cloudflare Pages | https://chiu-jianfu.pages.dev | 掛在**競選團隊自己的 Cloudflare 帳號**（透過 GitHub Secrets 裡的 `CLOUDFLARE_API_TOKEN`／`CLOUDFLARE_ACCOUNT_ID` 授權部署，團隊完全不需要接觸這個 GitHub repo） |
+| Cloudflare Pages | **https://chiuchienfu.tw**（正式網域，2026-09-25 已連接）／備援網址 https://chiu-jianfu.pages.dev | 掛在**競選團隊自己的 Cloudflare 帳號**（透過 GitHub Secrets 裡的 `CLOUDFLARE_API_TOKEN`／`CLOUDFLARE_ACCOUNT_ID` 授權部署，團隊完全不需要接觸這個 GitHub repo）。網域 `chiuchienfu.tw` 註冊在 GoDaddy，Nameservers 已指向 Cloudflare |
 
 **技術細節（給以後接手的工程/AI參考）**：兩邊網址結構不同（GitHub Pages 是子路徑 `/chiu-jianfu-campaign/`，Cloudflare Pages 是網域根目錄），所以 CI 會用不同的 `DEPLOY_TARGET` 環境變數各自建置一次（`astro.config.mjs` 裡有判斷邏輯），分別輸出到 `dist-github/` 跟 `dist-cloudflare/`，兩邊都不會提交進 git（已加進 `.gitignore`）。
 
@@ -58,7 +58,7 @@
 - 正式要公開上線、給 Google 收錄時，記得把這兩個地方的擋爬蟲設定拿掉
 - 如果之後**只想留 Cloudflare、關掉 GitHub Pages**：把 `deploy.yml` 裡建置/部署 GitHub Pages 那幾個步驟刪掉即可，Cloudflare 那半邊不受影響
 - 如果團隊要接手**程式碼本身**（不只是網站），用 GitHub 的「Transfer ownership」（repo 設定內）整包過戶即可，不用重建，這步不急，等真的有人要接手編輯內容再做
-- 團隊如果之後要接自己的正式網域（例如確認要用的網域），到 Cloudflare Pages 專案設定裡的「Custom domains」直接加，不用改程式碼
+- 網域 `chiuchienfu.tw` 註冊人資訊：Chiu / Chien-fu（邱建富本人，非個人協助者名義），登記在 GoDaddy，2027-09 到期需續約；聯絡電話用的是競選總部電話 `04-7631090`
 
 ## 尚待補齊事項（上線前請確認）
 
