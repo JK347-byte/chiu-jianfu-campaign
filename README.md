@@ -45,13 +45,20 @@
 
 ## 部署方式
 
-網站目前部署在 GitHub Pages：**https://jk347-byte.github.io/chiu-jianfu-campaign/**
+網站同時部署在**兩個地方**，每次 push 到 `main` 分支，`.github/workflows/deploy.yml` 會自動重新建置並更新**兩邊**，**不需要手動部署**，改完內容、commit、push 就好：
 
-- 每次 push 到 `main` 分支，`.github/workflows/deploy.yml` 會自動重新建置並更新網站，**不需要手動部署**，改完內容、commit、push 就好
-- 這個網址目前是**內部審閱用草稿**，還沒正式對外公布：`src/layouts/BaseLayout.astro` 加了 `noindex` 標籤、`public/robots.txt` 擋爬蟲，Google 不會收錄，但只要有網址連結，任何人都打得開
+| 平台 | 網址 | 帳號歸屬 |
+| --- | --- | --- |
+| GitHub Pages | https://jk347-byte.github.io/chiu-jianfu-campaign/ | 掛在 `jk347-byte`（日和聯合診所帳號），方便開發階段快速預覽 |
+| Cloudflare Pages | https://chiu-jianfu.pages.dev | 掛在**競選團隊自己的 Cloudflare 帳號**（透過 GitHub Secrets 裡的 `CLOUDFLARE_API_TOKEN`／`CLOUDFLARE_ACCOUNT_ID` 授權部署，團隊完全不需要接觸這個 GitHub repo） |
+
+**技術細節（給以後接手的工程/AI參考）**：兩邊網址結構不同（GitHub Pages 是子路徑 `/chiu-jianfu-campaign/`，Cloudflare Pages 是網域根目錄），所以 CI 會用不同的 `DEPLOY_TARGET` 環境變數各自建置一次（`astro.config.mjs` 裡有判斷邏輯），分別輸出到 `dist-github/` 跟 `dist-cloudflare/`，兩邊都不會提交進 git（已加進 `.gitignore`）。
+
+- 兩個網址目前都是**內部審閱用草稿**，還沒正式對外公布：`src/layouts/BaseLayout.astro` 加了 `noindex` 標籤、`public/robots.txt` 擋爬蟲，Google 不會收錄，但只要有網址連結，任何人都打得開
 - 正式要公開上線、給 Google 收錄時，記得把這兩個地方的擋爬蟲設定拿掉
-- 目前掛在 `jk347-byte`（日和聯合診所）這個 GitHub 帳號底下方便快速開發，之後如果要交接給獨立的競選團隊帳號，用 GitHub 的「Transfer ownership」（repo設定內）整包過戶即可，不用重建
-- 未來如果要換成候選人自己的正式網域（例如 `chiu-jianfu.tw`），改 `astro.config.mjs` 的 `site` 跟 `base`（`base` 改回 `'/'`）就好，其餘程式碼不用動，因為連結都是透過 `src/utils/url.ts` 統一組出來的
+- 如果之後**只想留 Cloudflare、關掉 GitHub Pages**：把 `deploy.yml` 裡建置/部署 GitHub Pages 那幾個步驟刪掉即可，Cloudflare 那半邊不受影響
+- 如果團隊要接手**程式碼本身**（不只是網站），用 GitHub 的「Transfer ownership」（repo 設定內）整包過戶即可，不用重建，這步不急，等真的有人要接手編輯內容再做
+- 團隊如果之後要接自己的正式網域（例如確認要用的網域），到 Cloudflare Pages 專案設定裡的「Custom domains」直接加，不用改程式碼
 
 ## 尚待補齊事項（上線前請確認）
 

@@ -1,5 +1,7 @@
 # build output
 dist/
+dist-github/
+dist-cloudflare/
 # generated types
 .astro/
 

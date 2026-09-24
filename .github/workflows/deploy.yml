@@ -1,8 +1,10 @@
-name: Deploy to GitHub Pages
+name: Deploy site
 
-# 每次 push 到 main 分支，自動重新建置並部署網站。
+# 每次 push 到 main 分支，自動重新建置並部署到兩個地方：
+# GitHub Pages（jk347-byte.github.io/chiu-jianfu-campaign/）跟
+# Cloudflare Pages（chiu-jianfu.pages.dev，團隊自己的帳號）。
 # 給維護團隊：只要照 README 說明改 src/content/ 或 src/data/site.ts 的內容、
-# commit、push 到 main，幾分鐘後網站就會自動更新，不需要手動做任何部署動作。
+# commit、push 到 main，幾分鐘後兩邊網站都會自動更新，不需要手動部署。
 
 on:
   push:
@@ -23,11 +25,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: withastro/action@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - run: npm ci
+      - name: Build for GitHub Pages
+        run: npm run build -- --outDir dist-github
+      - name: Build for Cloudflare Pages
+        run: npm run build -- --outDir dist-cloudflare
+        env:
+          DEPLOY_TARGET: cloudflare
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist-github
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist-cloudflare --project-name=chiu-jianfu --branch=main
 
-  deploy:
+  deploy-github-pages:
     needs: build
     runs-on: ubuntu-latest
     environment:
