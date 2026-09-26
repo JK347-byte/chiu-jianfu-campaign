@@ -25,7 +25,7 @@ export const site = {
 
   hero: {
     slogan: "產業升級、青年返鄉、世代共好",
-    subtitle: "跳脫藍綠對立，站在彰化縣民的利益立場",
+    subtitle: "跳脫藍綠對立，沒有政黨包袱，以縣民的福祉為優先考量",
     // 候選人主視覺照片，請把實際照片放到 public/images/ 資料夾，再把檔名改到這裡
     portrait: "/images/candidate-hero.jpg",
     primaryCta: {
